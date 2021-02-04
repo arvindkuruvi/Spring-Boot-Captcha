@@ -90,6 +90,30 @@ public class CaptchaServiceImpl implements CaptchaService
 		
 		CaptchaResponse response = new CaptchaResponse();
 		
+			if (captchaRegister.containsKey(request.getCaptcha())) {
+			log.info("<-------------------------------------------->");
+			log.info("Captcha : " + request.getCaptcha());
+			log.info(captchaRegister.get(request.getCaptcha()) + " is present in Register");
+			log.info("captcha validated!");
+			response.setMessage("captcha validated!");
+			response.setSuccess(true);
+
+			captchaRegister.remove(request.getCaptcha());
+
+			log.info("<-------------------------------------------->");
+			return response;
+		} else {
+			response.setMessage("captcha not validated!");
+			response.setSuccess(false);
+			log.info("<-------------------------------------------->");
+			log.info("captcha not validated!");
+			log.info("<-------------------------------------------->");
+		}
+
+		return response;
+		
+		
+		
 	    Set<Entry<String, CaptchaRequest>> entrySet = captchaRegister.entrySet();
 	    
 	    Iterator<Entry<String, CaptchaRequest>> itr = entrySet.iterator();
